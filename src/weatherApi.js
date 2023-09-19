@@ -5,7 +5,13 @@ $(document).ready(function () {
       url: URL,
       type: "GET",
       success: function(result) {
-        console.log(result)
+        console.log(result);
+        var div = document.getElementById("weather_info");
+        for (var i = 0; i < result.hourly.temperature_2m.length; i++) {
+         result.hourly.temperature_2m[i] = (((9/5) * result.hourly.temperature_2m[i]) + 32).toFixed(0);
+        }
+        
+        div.innerHTML = result.hourly.temperature_2m;
       },
       error: function(error) {
         console.log(`Error ${error}`)
