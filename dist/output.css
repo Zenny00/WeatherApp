@@ -550,6 +550,10 @@ video {
   align-content: center;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
