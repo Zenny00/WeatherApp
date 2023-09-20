@@ -1,6 +1,8 @@
-function createDiv(parentDiv, temperature, day) {
+function createDiv(parentDiv, temperature_max, temperature_min, day) {
   document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-4 place-items-stretch">'
-    + '<div style="text-align: center;">' + temperature + '</div><div style="text-align: center;">' + day + '</div></div>';
+    + '<div style="text-align: center;" class="text-slate-50 text-2xl">' + temperature_max + '</div>'
+    + '<div style="text-align: center;" class="text-slate-600 text-m">' + temperature_min + '</div>'
+    + '<div style="text-align: center;" class="text-slate-100 text-xl">' + day + '</div></div>';
 }
 
 $(document).ready(function () {
@@ -13,13 +15,14 @@ $(document).ready(function () {
         console.log(result);
         for (var i = 0; i < result.daily.temperature_2m_max.length; i++) {
          result.daily.temperature_2m_max[i] = (result.daily.temperature_2m_max[i]).toFixed(0).toString() + "&deg;F";
+         result.daily.temperature_2m_min[i] = (result.daily.temperature_2m_min[i]).toFixed(0).toString() + "&deg;F";
         }
          
         const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
         const current_day = new Date().getDay();
         const weekdays = [];
         for (var i = 0; i < weekday.length; i++) {
-          createDiv("forecast_box", result.daily.temperature_2m_max[i], weekday[(current_day + i) % 7]);
+          createDiv("forecast_box", result.daily.temperature_2m_max[i], result.daily.temperature_2m_min[i], weekday[(current_day + i) % 7]);
         }
       },
       error: function(error) {
