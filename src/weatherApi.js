@@ -1,6 +1,6 @@
 function createDiv(parentDiv, temperature, day) {
-  document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-4">'
-    + '<div>' + temperature + '</div><div>' + day + '</div></div>';
+  document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-4 place-items-stretch">'
+    + '<div style="text-align: center;">' + temperature + '</div><div style="text-align: center;">' + day + '</div></div>';
 }
 
 $(document).ready(function () {

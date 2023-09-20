@@ -534,16 +534,8 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.flex {
-  display: flex;
-}
-
 .grid {
   display: grid;
-}
-
-.h-screen {
-  height: 100vh;
 }
 
 .grid-cols-1 {
@@ -558,16 +550,16 @@ video {
   place-items: center;
 }
 
+.place-items-stretch {
+  place-items: stretch;
+}
+
 .content-center {
   align-content: center;
 }
 
-.items-center {
-  align-items: center;
-}
-
-.items-stretch {
-  align-items: stretch;
+.content-around {
+  align-content: space-around;
 }
 
 .justify-center {
@@ -578,12 +570,8 @@ video {
   gap: 1rem;
 }
 
-.gap-5 {
-  gap: 1.25rem;
-}
-
-.gap-1 {
-  gap: 0.25rem;
+.font-rubik {
+  font-family: Rubik;
 }
 
 .text-3xl {
