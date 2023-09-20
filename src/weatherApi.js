@@ -1,15 +1,23 @@
 function getIcon(weather_code) {
   var icon_name = "";
   switch(weather_code) {
-    case 0:
-    case 1:
+    case 0: case 1:
       icon_name = "wi-day-sunny.svg";
       break;
     case 2:
-      icon_name = "wi-cloudy.svg";
+      icon_name = "wi-day-cloudy.svg";
       break;
     case 3:
-      icon_name = "wi-day-cloudy.svg";
+      icon_name = "wi-cloudy.svg";
+      break;
+    case 51: case 53: case 55:
+      icon_name = "wi-sprinkle.svg";
+      break;
+    case 61: case 63: case 65:
+      icon_name ="wi-rain.svg";
+      break;
+    case 80: case 81: case 82:
+      icon_name = "wi-showers.svg";
       break;
     default:
       icon_name = "wi-day-sunny.svg";
