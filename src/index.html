@@ -8,20 +8,15 @@
  	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="./weatherApi.js"></script>
 </head>
 <body>
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
-  <div id="weather_info" class="justify-center">
-  Test
-  </div>
-
-  <div id="day_info" class="justify-center">
-  Test
+  <div id="header" class="flex flex-row items-center bg-indigo-600">
+    <img src="./res/wi-day-sunny-overcast.svg" class="object-contain h-20 w-20">
+    <div style="font-family: 'Montserrat', sans-serif;" class="text-4xl">Swift Weather</div>
   </div>
 
   <div id="forecast_box" class="grid grid-cols-7 place-items-center" style="font-family: 'Rubik', sans-serif;"></div>
