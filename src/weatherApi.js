@@ -34,12 +34,12 @@ function getIcon(weather_code, hour) {
 function fillWeeklyDiv(parentDiv, temperature_max, temperature_min, day, date, weather_code, precip) {
   document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-5 place-items-stretch">'
     + '<img style="text-align: center;" src="./res/WeatherIcons/svg/' + getIcon(weather_code, 12) + '" class="object-cover h-32 w-32">'
-    + '<div style="text-align: center;" class="text-slate-50 text-2xl object-contain h-5 w-32">' + temperature_max + '</div>'
-    + '<div style="text-align: center;" class="text-slate-300 text-m object-contain h-5 w-32">' + temperature_min + '</div>'
-    + '<div style="text-align: center;" class="text-slate-100 text-xl object-contain h-5 w-32">' + day + '</div>'
-    + '<div style="text-align: center;" class="text-slate-300 text-l object-contain h-10 w-32">' + date + '</div>'
-    + '<div style="text-align: center;" class="text-slate-100 text-m object-contain h-5 w-32">Precipitation:</div>'
-    + '<div style="text-align: center;" class="text-slate-300 text-s object-contain h-5 w-32">' + precip + '%</div>'
+    + '<div style="text-align: center;" class="text-slate-50 text-2xl sm:text-sm h-5 w-28">' + temperature_max + '</div>'
+    + '<div style="text-align: center;" class="text-slate-300 text-md sm:text-xs h-5 w-28">' + temperature_min + '</div>'
+    + '<div style="text-align: center;" class="text-slate-100 text-xl sm:text-sm h-5 w-28">' + day + '</div>'
+    + '<div style="text-align: center;" class="text-slate-300 text-lg sm:text-sm h-10 w-28">' + date + '</div>'
+    + '<div style="text-align: center;" class="text-slate-100 text-md sm:text-xs h-5 w-28">Precipitation:</div>'
+    + '<div style="text-align: center;" class="text-slate-300 text-sm sm:text-xs h-5 w-28">' + precip + '%</div>'
     + '</div>';
 }
 
@@ -51,7 +51,7 @@ function fillDailyIcon(parentDiv, weather_code, hour) {
 
 function fillDailyData(parentDiv, current_temp) {
   document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-5">'
-    + '<div style="text-align: center;" class="text-slate-100 text-m object-contain">Current Temperature: ' + current_temp + '</div>'
+    + '<div style="text-align: center;" class="text-slate-100 text-xl object-contain">Current Temperature: ' + current_temp + '</div>'
     + '</div>';
 }
 
