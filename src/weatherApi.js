@@ -1,8 +1,12 @@
-function getIcon(weather_code) {
+function getIcon(weather_code, hour) {
   var icon_name = "";
   switch(weather_code) {
     case 0: case 1:
-      icon_name = "wi-day-sunny.svg";
+      if (hour > 18 || hour < 6) {
+        icon_name = "wi-night-clear.svg";
+      } else {
+        icon_name = "wi-day-sunny.svg";
+      }
       break;
     case 2:
       icon_name = "wi-day-cloudy.svg";
@@ -29,7 +33,7 @@ function getIcon(weather_code) {
 
 function createDiv(parentDiv, temperature_max, temperature_min, day, date, weather_code, precip) {
   document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-5 place-items-stretch">'
-    + '<img style="text-align: center;" src="./res/WeatherIcons/svg/' + getIcon(weather_code) + '" class="object-cover h-32 w-32">'
+    + '<img style="text-align: center;" src="./res/WeatherIcons/svg/' + getIcon(weather_code, 12) + '" class="object-cover h-32 w-32">'
     + '<div style="text-align: center;" class="text-slate-50 text-2xl object-contain h-5 w-32">' + temperature_max + '</div>'
     + '<div style="text-align: center;" class="text-slate-300 text-m object-contain h-5 w-32">' + temperature_min + '</div>'
     + '<div style="text-align: center;" class="text-slate-100 text-xl object-contain h-5 w-32">' + day + '</div>'
@@ -39,7 +43,11 @@ function createDiv(parentDiv, temperature_max, temperature_min, day, date, weath
     + '</div>';
 }
 
-// Precipitation:
+function dailyForecast(parentDiv, weather_code, hour) {
+  document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-5 place-items-stretch">'
+    + '<img style="text-align: center;" src="./res/WeatherIcons/svg/' + getIcon(weather_code, hour) + '" class="object-cover h-48 w-48">'
+    + '</div>';
+}
 
 $(document).ready(function () {
   navigator.geolocation.getCurrentPosition((location) => {
@@ -48,6 +56,9 @@ $(document).ready(function () {
       url: URL,
       type: "GET",
       success: function(result) {
+        const current_date = new Date();
+        dailyForecast("daily_forecast_box", result.hourly.weathercode[current_date.getHours()], current_date.getHours());
+
         console.log(result);
         for (var i = 0; i < result.daily.temperature_2m_max.length; i++) {
          result.daily.temperature_2m_max[i] = (result.daily.temperature_2m_max[i]).toFixed(0).toString() + "&deg;F";
@@ -56,10 +67,9 @@ $(document).ready(function () {
         }
          
         const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-        const current_day = new Date().getDay();
         const weekdays = [];
         for (var i = 0; i < weekday.length; i++) {
-          createDiv("forecast_box", result.daily.temperature_2m_max[i], result.daily.temperature_2m_min[i], weekday[(current_day + i) % 7], result.daily.time[i], result.daily.weathercode[i], result.daily.precipitation_probability_max[i]);
+          createDiv("forecast_box", result.daily.temperature_2m_max[i], result.daily.temperature_2m_min[i], weekday[(current_date.getDay() + i) % 7], result.daily.time[i], result.daily.weathercode[i], result.daily.precipitation_probability_max[i]);
         }
       },
       error: function(error) {
