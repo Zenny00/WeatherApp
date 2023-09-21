@@ -2,7 +2,7 @@ function getIcon(weather_code, hour) {
   var icon_name = "";
   switch(weather_code) {
     case 0: case 1:
-      if (hour > 18 || hour < 6) {
+      if (hour > 20 || hour < 6) {
         icon_name = "wi-night-clear.svg";
       } else {
         icon_name = "wi-day-sunny.svg";
@@ -31,7 +31,7 @@ function getIcon(weather_code, hour) {
   return icon_name;
 }
 
-function createDiv(parentDiv, temperature_max, temperature_min, day, date, weather_code, precip) {
+function fillWeeklyDiv(parentDiv, temperature_max, temperature_min, day, date, weather_code, precip) {
   document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-5 place-items-stretch">'
     + '<img style="text-align: center;" src="./res/WeatherIcons/svg/' + getIcon(weather_code, 12) + '" class="object-cover h-32 w-32">'
     + '<div style="text-align: center;" class="text-slate-50 text-2xl object-contain h-5 w-32">' + temperature_max + '</div>'
@@ -43,34 +43,47 @@ function createDiv(parentDiv, temperature_max, temperature_min, day, date, weath
     + '</div>';
 }
 
-function dailyForecast(parentDiv, weather_code, hour) {
+function fillDailyDiv(parentDiv, weather_code, hour) {
   document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-5 place-items-stretch">'
     + '<img style="text-align: center;" src="./res/WeatherIcons/svg/' + getIcon(weather_code, hour) + '" class="object-cover h-48 w-48">'
     + '</div>';
 }
 
+function dailyForecast(parentDiv, hourly) {
+  const CURRENT_HOUR = new Date().getHours();
+  var weather_code = hourly.weathercode[CURRENT_HOUR];
+  
+  fillDailyDiv(parentDiv, weather_code, CURRENT_HOUR);
+}
+
+function weeklyForecast(parentDiv, daily) {
+  const NUM_ENTRIES = 7;
+  const CURRENT_DAY = new Date().getDay();
+  const WEEKDAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var max_temp = [], min_temp = [], date = [];
+  
+  for (var i = 0; i < daily.temperature_2m_max.length; i++) {
+    max_temp[i] = (daily.temperature_2m_max[i]).toFixed(0).toString() + "&deg;F";
+    min_temp[i] = (daily.temperature_2m_min[i]).toFixed(0).toString() + "&deg;F";
+    date[i] = daily.time[i].substring(5); 
+  }
+           
+  for (var i = 0; i < NUM_ENTRIES; i++) {
+    fillWeeklyDiv(parentDiv, max_temp[i], min_temp[i], WEEKDAYS[(CURRENT_DAY + i) % 7], date[i], daily.weathercode[i], daily.precipitation_probability_max[i]);
+  }
+}
+
 $(document).ready(function () {
   navigator.geolocation.getCurrentPosition((location) => {
-    const URL = "https://api.open-meteo.com/v1/forecast?latitude=" + location.coords.latitude + "&longitude=" + location.coords.longitude + "&hourly=temperature_2m,relativehumidity_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,rain_sum,snowfall_sum,precipitation_probability_max,windspeed_10m_max&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FNew_York";
+    const API_REQUEST = "&hourly=temperature_2m,relativehumidity_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,rain_sum,snowfall_sum,precipitation_probability_max,windspeed_10m_max&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=";
+    const URL = "https://api.open-meteo.com/v1/forecast?latitude=" + location.coords.latitude + "&longitude=" + location.coords.longitude + API_REQUEST + "America%2FNew_York";
     $.ajax({ 
       url: URL,
       type: "GET",
       success: function(result) {
-        const current_date = new Date();
-        dailyForecast("daily_forecast_box", result.hourly.weathercode[current_date.getHours()], current_date.getHours());
-
-        console.log(result);
-        for (var i = 0; i < result.daily.temperature_2m_max.length; i++) {
-         result.daily.temperature_2m_max[i] = (result.daily.temperature_2m_max[i]).toFixed(0).toString() + "&deg;F";
-         result.daily.temperature_2m_min[i] = (result.daily.temperature_2m_min[i]).toFixed(0).toString() + "&deg;F";
-         result.daily.time[i] = result.daily.time[i].substring(5); 
-        }
-         
-        const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-        const weekdays = [];
-        for (var i = 0; i < weekday.length; i++) {
-          createDiv("forecast_box", result.daily.temperature_2m_max[i], result.daily.temperature_2m_min[i], weekday[(current_date.getDay() + i) % 7], result.daily.time[i], result.daily.weathercode[i], result.daily.precipitation_probability_max[i]);
-        }
+          const current_date = new Date();
+          dailyForecast("daily_forecast_box", result.hourly); 
+          weeklyForecast("weekly_forecast_box", result.daily);
       },
       error: function(error) {
         console.log(`Error ${error}`)
