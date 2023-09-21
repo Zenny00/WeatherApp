@@ -43,17 +43,26 @@ function fillWeeklyDiv(parentDiv, temperature_max, temperature_min, day, date, w
     + '</div>';
 }
 
-function fillDailyDiv(parentDiv, weather_code, hour) {
+function fillDailyIcon(parentDiv, weather_code, hour) {
   document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-5 place-items-stretch">'
-    + '<img style="text-align: center;" src="./res/WeatherIcons/svg/' + getIcon(weather_code, hour) + '" class="object-cover h-48 w-48">'
+    + '<img style="text-align: center;" src="./res/WeatherIcons/svg/' + getIcon(weather_code, hour) + '" class="h-48 w-48">'
+    + '</div>';
+}
+
+function fillDailyData(parentDiv, current_temp) {
+  document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-5">'
+    + '<div style="text-align: center;" class="text-slate-100 text-m object-contain">Current Temperature: ' + current_temp + '</div>'
     + '</div>';
 }
 
 function dailyForecast(parentDiv, hourly) {
   const CURRENT_HOUR = new Date().getHours();
   var weather_code = hourly.weathercode[CURRENT_HOUR];
+ 
+  var current_temp = hourly.temperature_2m[CURRENT_HOUR].toFixed(0).toString() + "&deg;F";
   
-  fillDailyDiv(parentDiv, weather_code, CURRENT_HOUR);
+  fillDailyIcon(parentDiv, weather_code, CURRENT_HOUR);
+  fillDailyData(parentDiv, current_temp);
 }
 
 function weeklyForecast(parentDiv, daily) {
@@ -81,6 +90,7 @@ $(document).ready(function () {
       url: URL,
       type: "GET",
       success: function(result) {
+          console.log(result);
           const current_date = new Date();
           dailyForecast("daily_forecast_box", result.hourly); 
           weeklyForecast("weekly_forecast_box", result.daily);
