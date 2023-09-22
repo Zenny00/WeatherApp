@@ -44,16 +44,24 @@ function fillWeeklyDiv(parentDiv, temperature_max, temperature_min, day, date, w
     + '</div>';
 }
 
+// Thanks to Edward Brey for this function | https://stackoverflow.com/questions/7490660/converting-wind-direction-in-angles-to-text-words
+function getCardinalDirection(angle) {
+      const directions = ['↑ N', '↗ NE', '→ E', '↘ SE', '↓ S', '↙ SW', '← W', '↖ NW'];
+      return directions[Math.round(angle / 45) % 8];
+}
+
 function fillDailyIcon(parentDiv, weather_code, hour) {
   document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-5 place-items-stretch">'
     + '<img style="text-align: center;" src="./res/WeatherIcons/svg/' + getIcon(weather_code, hour) + '" class="h-48 w-48">'
     + '</div>';
 }
 
-function fillDailyData(parentDiv, current_temp, feels_like, current_humidity) {
+function fillDailyData(parentDiv, current_temp, feels_like, current_humidity, wind_speed, wind_dir, rain_hourly) {
   document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-5">'
     + '<div class="text-slate-100 text-xl object-contain">Current Temperature: ' + current_temp + ' | Feels like: ' + feels_like + '</div>'
     + '<div class="text-slate-100 text-xl object-contain">Humidity: ' + current_humidity + '</div>'
+    + '<div class="text-slate-100 text-xl object-contain">Wind: ' + wind_speed + ' ' + wind_dir + '</div>'
+    + '<div class="text-slate-100 text-xl object-contain">Hourly Rainfall: ' + rain_hourly + '</div>'
     + '</div>';
 }
 
@@ -64,8 +72,13 @@ function dailyForecast(parentDiv, hourly) {
   var current_humidity = hourly.relativehumidity_2m[CURRENT_HOUR].toFixed(0).toString() + "%";
   var feels_like = hourly.apparent_temperature[CURRENT_HOUR].toFixed(0).toString() + "&deg;F";
 
+  var wind_speed = hourly.windspeed_10m[CURRENT_HOUR].toFixed(0).toString() + " Mph";
+  var wind_dir = getCardinalDirection(hourly.winddirection_10m[CURRENT_HOUR]);
+
+  var rain_hourly = hourly.rain[CURRENT_HOUR].toFixed(3).toString() + " In.";
+
   fillDailyIcon(parentDiv, weather_code, CURRENT_HOUR);
-  fillDailyData(parentDiv, current_temp, feels_like, current_humidity);
+  fillDailyData(parentDiv, current_temp, feels_like, current_humidity, wind_speed, wind_dir, rain_hourly);
 }
 
 function weeklyForecast(parentDiv, daily) {
@@ -87,7 +100,7 @@ function weeklyForecast(parentDiv, daily) {
 
 $(document).ready(function () {
   navigator.geolocation.getCurrentPosition((location) => {
-    const API_REQUEST = "&hourly=temperature_2m,relativehumidity_2m,weathercode,apparent_temperature,precipitation,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,rain_sum,snowfall_sum,precipitation_probability_max,windspeed_10m_max&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=";
+    const API_REQUEST = "&hourly=temperature_2m,relativehumidity_2m,weathercode,apparent_temperature,rain,precipitation,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,rain_sum,snowfall_sum,precipitation_probability_max,windspeed_10m_max&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=";
     const URL = "https://api.open-meteo.com/v1/forecast?latitude=" + location.coords.latitude + "&longitude=" + location.coords.longitude + API_REQUEST + "America%2FNew_York";
     $.ajax({ 
       url: URL,
