@@ -58,10 +58,10 @@ function fillDailyIcon(parentDiv, weather_code, hour) {
 
 function fillDailyData(parentDiv, current_temp, feels_like, current_humidity, wind_speed, wind_dir, rain_hourly) {
   document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-5">'
-    + '<div class="text-slate-100 text-xl object-contain">Current Temperature: ' + current_temp + ' | Feels like: ' + feels_like + '</div>'
-    + '<div class="text-slate-100 text-xl object-contain">Humidity: ' + current_humidity + '</div>'
-    + '<div class="text-slate-100 text-xl object-contain">Wind: ' + wind_speed + ' ' + wind_dir + '</div>'
-    + '<div class="text-slate-100 text-xl object-contain">Hourly Rainfall: ' + rain_hourly + '</div>'
+    + '<div class="text-slate-100 text-sm/5 sm:text-xl object-contain">Current Temperature: ' + current_temp + ' | Feels like: ' + feels_like + '</div>'
+    + '<div class="text-slate-100 text-sm/5 sm:text-xl object-contain">Humidity: ' + current_humidity + '</div>'
+    + '<div class="text-slate-100 text-sm/5 sm:text-xl object-contain">Wind: ' + wind_speed + ' ' + wind_dir + '</div>'
+    + '<div class="text-slate-100 text-sm/5 sm:text-xl object-contain">Hourly Rainfall: ' + rain_hourly + '</div>'
     + '</div>';
 }
 
