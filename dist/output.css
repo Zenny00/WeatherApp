@@ -550,8 +550,8 @@ video {
   height: 2.5rem;
 }
 
-.h-16 {
-  height: 4rem;
+.h-14 {
+  height: 3.5rem;
 }
 
 .h-20 {
@@ -574,8 +574,8 @@ video {
   width: 50%;
 }
 
-.w-16 {
-  width: 4rem;
+.w-14 {
+  width: 3.5rem;
 }
 
 .w-20 {
@@ -676,12 +676,16 @@ video {
   padding: 1.25rem;
 }
 
-.text-3xl {
-  font-size: 1.953rem;
-}
-
 .text-4xl {
   font-size: 2.441rem;
+}
+
+.text-mc {
+  font-size: 0.55rem;
+}
+
+.text-qm {
+  font-size: 0.50rem;
 }
 
 .text-sm {
@@ -722,6 +726,10 @@ video {
 
   .sm\:text-2xl {
     font-size: 1.563rem;
+  }
+
+  .sm\:text-3xl {
+    font-size: 1.953rem;
   }
 
   .sm\:text-xl {

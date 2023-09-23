@@ -34,12 +34,12 @@ function getIcon(weather_code, hour) {
 
 function fillWeeklyDiv(parentDiv, temperature_max, temperature_min, day, date, weather_code, precip) {
   document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-5 place-items-center">'
-    + '<img style="text-align: center;" src="./res/WeatherIcons/svg/' + getIcon(weather_code, 12) + '" class="object-cover h-16 w-16 sm:h-32 sm:w-32">'
+    + '<img style="text-align: center;" src="./res/WeatherIcons/svg/' + getIcon(weather_code, 12) + '" class="object-cover h-14 w-14 sm:h-32 sm:w-32">'
     + '<div style="text-align: center;" class="text-slate-50 text-lg sm:text-2xl h-5 w-28">' + temperature_max + '</div>'
     + '<div style="text-align: center;" class="text-slate-300 text-sm sm:text-md h-5 w-28">' + temperature_min + '</div>'
-    + '<div style="text-align: center;" class="text-slate-100 text-sm sm:text-xl h-5 w-28">' + day + '</div>'
-    + '<div style="text-align: center;" class="text-slate-300 text-sm sm:text-lg h-10 w-28">' + date + '</div>'
-    + '<div style="text-align: center;" class="text-slate-100 text-tn sm:text-md h-5 w-28">Precipitation:</div>'
+    + '<div style="text-align: center;" class="text-slate-100 text-tn sm:text-xl h-5 w-28">' + day + '</div>'
+    + '<div style="text-align: center;" class="text-slate-300 text-tn sm:text-lg h-10 w-28">' + date + '</div>'
+    + '<div style="text-align: center;" class="text-slate-100 text-qm sm:text-md h-5 w-28">Precipitation:</div>'
     + '<div style="text-align: center;" class="text-slate-300 text-sm sm:text-md h-5 w-28">' + precip + '%</div>'
     + '</div>';
 }
@@ -58,10 +58,10 @@ function fillDailyIcon(parentDiv, weather_code, hour) {
 
 function fillDailyData(parentDiv, current_temp, feels_like, current_humidity, wind_speed, wind_dir, rain_hourly) {
   document.getElementById(parentDiv).innerHTML += '<div class="grid grid-cols-1 gap-5">'
-    + '<div class="text-slate-100 text-tn sm:text-xl object-contain">Current Temperature: ' + current_temp + ' | Feels like: ' + feels_like + '</div>'
-    + '<div class="text-slate-100 text-tn sm:text-xl object-contain">Humidity: ' + current_humidity + '</div>'
-    + '<div class="text-slate-100 text-tn sm:text-xl object-contain">Wind: ' + wind_speed + ' ' + wind_dir + '</div>'
-    + '<div class="text-slate-100 text-tn sm:text-xl object-contain">Hourly Rainfall: ' + rain_hourly + '</div>'
+    + '<div class="text-slate-100 text-mc sm:text-xl object-contain">Current Temperature: ' + current_temp + ' | Feels like: ' + feels_like + '</div>'
+    + '<div class="text-slate-100 text-mc sm:text-xl object-contain">Humidity: ' + current_humidity + '</div>'
+    + '<div class="text-slate-100 text-mc sm:text-xl object-contain">Wind: ' + wind_speed + ' ' + wind_dir + '</div>'
+    + '<div class="text-slate-100 text-mc sm:text-xl object-contain">Hourly Rainfall: ' + rain_hourly + '</div>'
     + '</div>';
 }
 
