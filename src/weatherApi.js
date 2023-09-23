@@ -37,10 +37,10 @@ function fillWeeklyDiv(parentDiv, temperature_max, temperature_min, day, date, w
     + '<img style="text-align: center;" src="./res/WeatherIcons/svg/' + getIcon(weather_code, 12) + '" class="object-cover h-14 w-14 sm:h-32 sm:w-32">'
     + '<div style="text-align: center;" class="text-slate-50 text-lg sm:text-2xl h-5 w-28">' + temperature_max + '</div>'
     + '<div style="text-align: center;" class="text-slate-300 text-sm sm:text-md h-5 w-28">' + temperature_min + '</div>'
-    + '<div style="text-align: center;" class="text-slate-100 text-tn sm:text-xl h-5 w-28">' + day + '</div>'
-    + '<div style="text-align: center;" class="text-slate-300 text-tn sm:text-lg h-10 w-28">' + date + '</div>'
+    + '<div style="text-align: center;" class="text-slate-100 text-mc sm:text-xl h-5 w-28">' + day + '</div>'
+    + '<div style="text-align: center;" class="text-slate-300 text-mc sm:text-lg h-10 w-28">' + date + '</div>'
     + '<div style="text-align: center;" class="text-slate-100 text-qm sm:text-md h-5 w-28">Precipitation:</div>'
-    + '<div style="text-align: center;" class="text-slate-300 text-sm sm:text-md h-5 w-28">' + precip + '%</div>'
+    + '<div style="text-align: center;" class="text-slate-300 text-tn sm:text-md h-5 w-28">' + precip + '%</div>'
     + '</div>';
 }
 
